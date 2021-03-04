@@ -28,11 +28,19 @@ With those in place, you can install the required packages by running:
 npm install
 ```
 
+#### Creating and seeding database tables
+
+```sh
+npm run migrations
+npm run seed
+```
+
 #### Starting the Development Server
 
 ```sh
 npm run dev
 ```
+
 The serve command will start the HTTP server and performs in-memory compilation of Typescript to Javascript. The --watch flag is meant to watch the file system for changes and re-start the server automatically.
 
 #### Compiling For Production
