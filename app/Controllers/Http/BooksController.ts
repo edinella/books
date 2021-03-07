@@ -8,7 +8,12 @@ export default class BooksController {
   }
 
   public async show(ctx: HttpContextContract) {
-    return await Book.find(ctx.params.id);
+    return await Book.query()
+      .select('*')
+      .from('books')
+      .where('id', ctx.params.id)
+      .preload('author')
+      .first()
   }
 
 }
