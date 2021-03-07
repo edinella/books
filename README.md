@@ -62,12 +62,13 @@ At this stage, you can upload the build folder to your production server, instal
 
 ### Routes
 
-- `GET /health` - Returns a health check report
-- `GET /books` - Returns a list of books in the database in JSON format
-- `GET /books/{{id}}` - Returns a detail view of the specified book id
-- `GET /authors` - Returns a list of authors in the database in JSON format
-- `GET /authors/{{id}}` - Returns a detail view of the specified author id
+All these API routes respond with `application/json` content type.
 
+- `GET /health` - Health check report
+- `GET /books` - List of books in the database
+- `GET /books/{{id}}` - Detail view of the specified book id, with nested author details
+- `GET /authors` - List of authors in the database
+- `GET /authors/{{id}}` - Detail view of the specified author id
 
 ### Utility commands
 
