@@ -31,3 +31,6 @@ Route.get('/health', async ({ response }) => {
 Route.get('/', async () => {
   return { hello: 'world' }
 })
+
+Route.get('/books', 'BooksController.index')
+Route.get('/books/:id', 'BooksController.show')
