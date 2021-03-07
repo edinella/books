@@ -34,3 +34,5 @@ Route.get('/', async () => {
 
 Route.get('/books', 'BooksController.index')
 Route.get('/books/:id', 'BooksController.show')
+Route.get('/authors', 'AuthorsController.index')
+Route.get('/authors/:id', 'AuthorsController.show')
