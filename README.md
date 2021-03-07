@@ -62,6 +62,13 @@ At this stage, you can upload the build folder to your production server, instal
 
 ### Routes
 
+- `GET /health` - Returns a health check report
+- `GET /books` - Returns a list of books in the database in JSON format
+- `GET /book/{{id}}` - Returns a detail view of the specified book id
+
+
+### Utility commands
+
 ```sh
 node ace list:routes
 ```
