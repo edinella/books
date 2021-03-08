@@ -105,7 +105,7 @@ test.group('Authors', () => {
           firstName: 'Harper',
           lastName: 'Lee'
         });
-      const onDB = await Author.find(1);
+      const onDB = await Author.findOrFail(1);
 
       // assert
       assert.equal(response.status, 200)
@@ -113,13 +113,92 @@ test.group('Authors', () => {
       assert.equal(response.body.id, 1)
       assert.equal(response.body.first_name, 'Harper')
       assert.equal(response.body.last_name, 'Lee')
-      assert.notEqual(onDB, null);
-      if (onDB !== null) {
-        assert.equal(onDB.id, 1);
-        assert.equal(onDB.firstName, 'Harper');
-        assert.equal(onDB.lastName, 'Lee');
-      }
+      assert.equal(onDB.id, 1);
+      assert.equal(onDB.firstName, 'Harper');
+      assert.equal(onDB.lastName, 'Lee');
     });
+
+  });
+
+  test.group('PUT', (group) => {
+
+    // arrange
+    let author: Author;
+    group.beforeEach(async () => {
+      Author.truncate()
+      author = new Author()
+      author.firstName = 'Harper'
+      author.lastName = 'Lee'
+      await author.save()
+    })
+
+    test('/authors/:id should require firstName', async (assert) => {
+
+      // act
+      const response = await supertest(BASE_URL).put(`/authors/${author.id}`)
+        .set('Content-Type', 'application/json')
+        .send({
+          firstName: '',
+          lastName: 'Leex'
+        });
+      const onDB = await Author.findOrFail(author.id);
+
+      // assert
+      assert.equal(response.status, 422)
+      assert.includeDeepMembers(response.body.errors, [{
+        rule: 'required',
+        field: 'firstName',
+        message: 'required validation failed'
+      }]);
+      assert.equal(onDB.id, 1);
+      assert.equal(onDB.firstName, 'Harper');
+      assert.equal(onDB.lastName, 'Lee');
+    })
+
+    test('/authors/:id should require lastName', async (assert) => {
+
+      // act
+      const response = await supertest(BASE_URL).put(`/authors/${author.id}`)
+        .set('Content-Type', 'application/json')
+        .send({
+          firstName: 'Bruce',
+          lastName: '',
+        });
+      const onDB = await Author.findOrFail(author.id);
+
+      // assert
+      assert.equal(response.status, 422)
+      assert.includeDeepMembers(response.body.errors, [{
+        rule: 'required',
+        field: 'lastName',
+        message: 'required validation failed'
+      }]);
+      assert.equal(onDB.id, 1);
+      assert.equal(onDB.firstName, 'Harper');
+      assert.equal(onDB.lastName, 'Lee');
+    })
+
+    test('/authors/:id should update an Author', async (assert) => {
+
+      // act
+      const response = await supertest(BASE_URL).put(`/authors/${author.id}`)
+        .set('Content-Type', 'application/json')
+        .send({
+          firstName: 'Bruce',
+          lastName: 'Leex'
+        });
+      const onDB = await Author.findOrFail(author.id);
+
+      // assert
+      assert.equal(response.status, 200)
+      assert.equal(response.type, 'application/json')
+      assert.equal(response.body.id, 1)
+      assert.equal(response.body.first_name, 'Bruce')
+      assert.equal(response.body.last_name, 'Leex')
+      assert.equal(onDB.id, 1);
+      assert.equal(onDB.firstName, 'Bruce');
+      assert.equal(onDB.lastName, 'Leex');
+    })
 
   });
 

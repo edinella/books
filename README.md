@@ -66,11 +66,12 @@ All these API routes respond with `application/json` content type.
 
 - `GET /health` - Health check report
 - `GET /books` - List of books in the database
-- `GET /books/{{id}}` - Detail view of the specified book id, with nested author details
+- `GET /books/:id` - Detail view of the specified book id, with nested author details
 - `GET /authors` - List of authors in the database
-- `GET /authors/{{id}}` - Detail view of the specified author id
+- `GET /authors/:id` - Detail view of the specified author id
 - `POST /authors` - Creates a new author with the specified details
 - `POST /books` - Creates a new book with the specified details
+- `PUT /authors/:id` - Updates an author with the specified details
 
 ### Utility commands
 

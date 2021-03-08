@@ -169,7 +169,7 @@ test.group('Books', () => {
           isbn: '978-0446310789',
           authorId: author.id,
         });
-      const onDB = await Book.find(1);
+      const onDB = await Book.findOrFail(1);
 
       // assert
       assert.equal(response.status, 200)
@@ -178,13 +178,10 @@ test.group('Books', () => {
       assert.equal(response.body.name, 'To Kill a Mockingbird')
       assert.equal(response.body.isbn, '978-0446310789')
       assert.equal(response.body.author_id, author.id)
-      assert.notEqual(onDB, null);
-      if (onDB !== null) {
-        assert.equal(onDB.id, 1);
-        assert.equal(onDB.name, 'To Kill a Mockingbird');
-        assert.equal(onDB.isbn, '978-0446310789');
-        assert.equal(onDB.authorId, author.id);
-      }
+      assert.equal(onDB.id, 1);
+      assert.equal(onDB.name, 'To Kill a Mockingbird');
+      assert.equal(onDB.isbn, '978-0446310789');
+      assert.equal(onDB.authorId, author.id);
     });
 
   });
