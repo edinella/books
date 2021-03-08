@@ -150,7 +150,7 @@ test.group('Authors', () => {
         field: 'firstName',
         message: 'required validation failed'
       }]);
-      assert.equal(onDB.id, 1);
+      assert.equal(onDB.id, author.id);
       assert.equal(onDB.firstName, 'Harper');
       assert.equal(onDB.lastName, 'Lee');
     })
@@ -178,7 +178,7 @@ test.group('Authors', () => {
       assert.equal(onDB.lastName, 'Lee');
     })
 
-    test('/authors/:id should update an Author', async (assert) => {
+    test('/authors/:id should update Author', async (assert) => {
 
       // act
       const response = await supertest(BASE_URL).put(`/authors/${author.id}`)

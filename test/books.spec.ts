@@ -6,6 +6,7 @@ import supertest from 'supertest'
 const BASE_URL = `http://${process.env.HOST}:${process.env.PORT}`
 
 test.group('Books', () => {
+
   test.group('GET', (group) => {
     let author: Author;
     let book: Book;
@@ -113,7 +114,7 @@ test.group('Books', () => {
       assert.equal(onDB.length, 0) // 👈  no record created
     });
 
-    test('/books should require well-formatted isbn', async (assert) => {
+    test('/books should require valid isbn', async (assert) => {
 
       // act
       const response = await supertest(BASE_URL).post('/books')
@@ -185,6 +186,133 @@ test.group('Books', () => {
     });
 
   });
+
+  test.group('PUT', (group) => {
+
+    // arrange
+    let author: Author;
+    let book: Book;
+    group.before(async () => {
+      Author.truncate()
+      author = new Author()
+      author.firstName = 'Harper'
+      author.lastName = 'Lee'
+      author = await author.save()
+    })
+    group.beforeEach(async () => {
+      Book.truncate()
+      book = new Book()
+      book.name = 'To Kill a Mockingbird'
+      book.isbn = '978-0446310789'
+      book.authorId = author.id
+      await book.save()
+    })
+
+    test('/books/:id should require name', async (assert) => {
+
+      // act
+      const response = await supertest(BASE_URL).put(`/books/${book.id}`)
+        .set('Content-Type', 'application/json')
+        .send({
+          name: '',
+          isbn: '978-0446310789',
+          authorId: author.id,
+        });
+      const onDB = await Book.findOrFail(book.id);
+
+      // assert
+      assert.equal(response.status, 422)
+      assert.includeDeepMembers(response.body.errors, [{
+        rule: 'required',
+        field: 'name',
+        message: 'required validation failed'
+      }]);
+      assert.equal(onDB.id, book.id);
+      assert.equal(onDB.name, 'To Kill a Mockingbird');
+      assert.equal(onDB.isbn, '978-0446310789');
+      assert.equal(onDB.authorId, author.id);
+    })
+
+    test('/books/:id should require valid isbn', async (assert) => {
+
+      // act
+      const response = await supertest(BASE_URL).put(`/books/${book.id}`)
+        .set('Content-Type', 'application/json')
+        .send({
+          name: 'Not To Kill a Mockingbird',
+          isbn: '676767',
+          authorId: author.id,
+        });
+      const onDB = await Book.findOrFail(book.id);
+
+      // assert
+      assert.equal(response.status, 422)
+      assert.includeDeepMembers(response.body.errors, [{
+        rule: 'regex',
+        field: 'isbn',
+        message: 'regex validation failed'
+      }]);
+      assert.equal(onDB.id, book.id);
+      assert.equal(onDB.name, 'To Kill a Mockingbird');
+      assert.equal(onDB.isbn, '978-0446310789');
+      assert.equal(onDB.authorId, author.id);
+    })
+
+    test('/books/:id should require existing authorId', async (assert) => {
+
+      // act
+      const response = await supertest(BASE_URL).put(`/books/${book.id}`)
+        .set('Content-Type', 'application/json')
+        .send({
+          name: 'Not To Kill a Mockingbird',
+          isbn: '978-0446310780',
+          authorId: author.id + 1,
+        });
+      const onDB = await Book.findOrFail(book.id);
+
+      // assert
+      assert.equal(response.status, 422)
+      assert.includeDeepMembers(response.body.errors, [{
+        rule: 'exists',
+        field: 'authorId',
+        message: 'exists validation failure'
+      }]);
+      assert.equal(onDB.id, book.id);
+      assert.equal(onDB.name, 'To Kill a Mockingbird');
+      assert.equal(onDB.isbn, '978-0446310789');
+      assert.equal(onDB.authorId, author.id);
+    })
+
+    test('/books/:id should update Book', async (assert) => {
+
+      // act
+      let otherAuthor = new Author()
+      otherAuthor.firstName = 'Harper'
+      otherAuthor.lastName = 'Lee'
+      otherAuthor = await otherAuthor.save()
+      const response = await supertest(BASE_URL).put(`/books/${book.id}`)
+        .set('Content-Type', 'application/json')
+        .send({
+          name: 'Not To Kill a Mockingbird',
+          isbn: '978-0446310780',
+          authorId: otherAuthor.id,
+        });
+      const onDB = await Book.findOrFail(book.id);
+
+      // assert
+      assert.equal(response.status, 200)
+      assert.equal(response.type, 'application/json')
+      assert.equal(response.body.id, 1)
+      assert.equal(response.body.name, 'Not To Kill a Mockingbird')
+      assert.equal(response.body.isbn, '978-0446310780')
+      assert.equal(response.body.author_id, otherAuthor.id)
+      assert.equal(onDB.id, 1);
+      assert.equal(onDB.name, 'Not To Kill a Mockingbird');
+      assert.equal(onDB.isbn, '978-0446310780');
+      assert.equal(onDB.authorId, otherAuthor.id);
+    })
+
+  })
 
 })
 
