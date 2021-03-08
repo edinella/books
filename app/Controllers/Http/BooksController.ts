@@ -7,11 +7,11 @@ export default class BooksController {
     return await Book.all()
   }
 
-  public async show(ctx: HttpContextContract) {
+  public async show({ params }: HttpContextContract) {
     return await Book.query()
       .select('*')
       .from('books')
-      .where('id', ctx.params.id)
+      .where('id', params.id)
       .preload('author')
       .first()
   }

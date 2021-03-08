@@ -47,7 +47,6 @@ test.group('Books', (group) => {
     const response = await supertest(BASE_URL).get('/books/1');
 
     // assert
-    console.log(response.body);
     assert.equal(response.status, 200)
     assert.equal(response.type, 'application/json')
     assert.equal(response.body.id, 1)
