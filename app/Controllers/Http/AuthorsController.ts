@@ -1,4 +1,4 @@
-import Author from "App/Models/Author";
+import Author from 'App/Models/Author';
 import { schema } from '@ioc:Adonis/Core/Validator'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
@@ -14,8 +14,8 @@ export default class AuthorsController {
 
   public async create({ request }: HttpContextContract) {
     const authorsSchema = schema.create({
-      firstName: schema.string(),
-      lastName: schema.string(),
+      firstName: schema.string({ trim: true }),
+      lastName: schema.string({ trim: true }),
     })
     const validatedData = await request.validate({ schema: authorsSchema })
     return await Author.create(validatedData)

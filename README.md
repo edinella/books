@@ -69,6 +69,8 @@ All these API routes respond with `application/json` content type.
 - `GET /books/{{id}}` - Detail view of the specified book id, with nested author details
 - `GET /authors` - List of authors in the database
 - `GET /authors/{{id}}` - Detail view of the specified author id
+- `POST /authors` - Creates a new author with the specified details
+- `POST /books` - Creates a new book with the specified details
 
 ### Utility commands
 

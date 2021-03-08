@@ -32,8 +32,10 @@ Route.get('/', async () => {
   return { hello: 'world' }
 })
 
-Route.get('/books', 'BooksController.index')
-Route.get('/books/:id', 'BooksController.show')
 Route.get('/authors', 'AuthorsController.index')
 Route.get('/authors/:id', 'AuthorsController.show')
 Route.post('/authors', 'AuthorsController.create')
+
+Route.get('/books', 'BooksController.index')
+Route.get('/books/:id', 'BooksController.show')
+Route.post('/books', 'BooksController.create')

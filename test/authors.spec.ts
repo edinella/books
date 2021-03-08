@@ -7,10 +7,10 @@ const BASE_URL = `http://${process.env.HOST}:${process.env.PORT}`
 test.group('Authors', () => {
 
   test.group('GET', (group) => {
+
+    // arrange
     let author: Author;
     group.beforeEach(async () => {
-
-      // arrange
       Author.truncate()
       author = new Author()
       author.firstName = 'Harper'
