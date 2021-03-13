@@ -5,16 +5,29 @@
 </template>
 
 <style>
+.container {
+  @apply max-w-7xl mx-auto px-3 sm:px-6 lg:px-8;
+}
+
+.action-bar {
+  @apply max-w-7xl mx-auto px-6 sm:px-11 lg:px-14;
+  @apply pb-6 flex items-center justify-between;
+}
+
+.action-bar-title {
+  @apply text-3xl font-medium text-gray-900;
+}
+
+.action-button {
+  @apply px-3 py-2 rounded-md text-sm font-medium bg-gray-900 text-gray-300 hover:bg-gray-700 hover:text-white;
+}
+.secondary-action-button {
+  @apply px-3 py-2 rounded-md text-sm font-medium text-gray-900 hover:text-gray-700;
+}
+
 html {
-  font-family:
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
+  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 16px;
   word-spacing: 1px;
   -ms-text-size-adjust: 100%;
@@ -22,6 +35,10 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
+}
+
+body {
+  @apply antialiased bg-gray-100;
 }
 
 *,
