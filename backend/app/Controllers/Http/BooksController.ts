@@ -18,15 +18,17 @@ export default class BooksController {
   }
 
   public async create({ request }: HttpContextContract) {
-    const validatedData = await request.validate({ schema: this.getSchema() })
-    return await Book.create(validatedData)
+    const data = await request.validate({ schema: this.getSchema() })
+    return await Book.create(data)
   }
 
   public async update({ request, params }: HttpContextContract) {
-    const previous = await Book.findOrFail(params.id);
-    const validatedData = await request.validate({ schema: this.getSchema() })
-    const book = Object.assign(previous, validatedData);
-    return await book.save();
+    let book = await Book.findOrFail(params.id);
+    const data = await request.validate({ schema: this.getSchema() })
+    book.name = data.name;
+    book.isbn = data.isbn;
+    book.authorId = data.author_id;
+    return await book.save()
   }
 
   private getSchema() {
@@ -35,7 +37,7 @@ export default class BooksController {
       isbn: schema.string({ trim: true }, [
         rules.regex(/((978[\--– ])?[0-9][0-9\--– ]{10}[\--– ][0-9xX])|((978)?[0-9]{9}[0-9Xx])/)
       ]),
-      authorId: schema.number([
+      author_id: schema.number([
         rules.exists({ table: 'authors', column: 'id' })
       ]),
     })

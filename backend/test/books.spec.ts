@@ -99,7 +99,7 @@ test.group('Books', () => {
         .send({
           // name: 'To Kill a Mockingbird',
           isbn: '978-0446310789',
-          authorId: author.id,
+          author_id: author.id,
         });
       const onDB = await Book.all();
 
@@ -122,7 +122,7 @@ test.group('Books', () => {
         .send({
           name: 'To Kill a Mockingbird',
           isbn: 'non valid isbn',
-          authorId: author.id,
+          author_id: author.id,
         });
       const onDB = await Book.all();
 
@@ -137,7 +137,7 @@ test.group('Books', () => {
       assert.equal(onDB.length, 0) // 👈  no record created
     });
 
-    test('/books should require existing authorId', async (assert) => {
+    test('/books should require existing author_id', async (assert) => {
 
       // act
       const response = await supertest(BASE_URL).post('/books')
@@ -145,7 +145,7 @@ test.group('Books', () => {
         .send({
           name: 'To Kill a Mockingbird',
           isbn: '978-0446310789',
-          authorId: author.id + 1,
+          author_id: author.id + 1,
         });
       const onDB = await Book.all();
 
@@ -154,7 +154,7 @@ test.group('Books', () => {
       assert.equal(response.type, 'application/json')
       assert.includeDeepMembers(response.body.errors, [{
         rule: 'exists',
-        field: 'authorId',
+        field: 'author_id',
         message: 'exists validation failure'
       }]);
       assert.equal(onDB.length, 0) // 👈  no record created
@@ -168,7 +168,7 @@ test.group('Books', () => {
         .send({
           name: 'To Kill a Mockingbird',
           isbn: '978-0446310789',
-          authorId: author.id,
+          author_id: author.id,
         });
       const onDB = await Book.findOrFail(1);
 
@@ -216,7 +216,7 @@ test.group('Books', () => {
         .send({
           name: '',
           isbn: '978-0446310789',
-          authorId: author.id,
+          author_id: author.id,
         });
       const onDB = await Book.findOrFail(book.id);
 
@@ -241,7 +241,7 @@ test.group('Books', () => {
         .send({
           name: 'Not To Kill a Mockingbird',
           isbn: '676767',
-          authorId: author.id,
+          author_id: author.id,
         });
       const onDB = await Book.findOrFail(book.id);
 
@@ -258,7 +258,7 @@ test.group('Books', () => {
       assert.equal(onDB.authorId, author.id);
     })
 
-    test('/books/:id should require existing authorId', async (assert) => {
+    test('/books/:id should require existing author_id', async (assert) => {
 
       // act
       const response = await supertest(BASE_URL).put(`/books/${book.id}`)
@@ -266,7 +266,7 @@ test.group('Books', () => {
         .send({
           name: 'Not To Kill a Mockingbird',
           isbn: '978-0446310780',
-          authorId: author.id + 1,
+          author_id: author.id + 1,
         });
       const onDB = await Book.findOrFail(book.id);
 
@@ -274,7 +274,7 @@ test.group('Books', () => {
       assert.equal(response.status, 422)
       assert.includeDeepMembers(response.body.errors, [{
         rule: 'exists',
-        field: 'authorId',
+        field: 'author_id',
         message: 'exists validation failure'
       }]);
       assert.equal(onDB.id, book.id);
@@ -295,11 +295,13 @@ test.group('Books', () => {
         .send({
           name: 'Not To Kill a Mockingbird',
           isbn: '978-0446310780',
-          authorId: otherAuthor.id,
+          author_id: otherAuthor.id,
         });
       const onDB = await Book.findOrFail(book.id);
 
       // assert
+      console.log(response.body);
+
       assert.equal(response.status, 200)
       assert.equal(response.type, 'application/json')
       assert.equal(response.body.id, 1)
