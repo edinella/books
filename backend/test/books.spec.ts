@@ -300,8 +300,6 @@ test.group('Books', () => {
       const onDB = await Book.findOrFail(book.id);
 
       // assert
-      console.log(response.body);
-
       assert.equal(response.status, 200)
       assert.equal(response.type, 'application/json')
       assert.equal(response.body.id, 1)

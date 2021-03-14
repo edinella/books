@@ -1,5 +1,5 @@
 <template>
-  <footer class="bg-gray-400 text-gray-800 text-center py-6">
+  <footer class="bg-neutral-400 text-neutral-800 text-center py-6">
     Thanks.
   </footer>
 </template>

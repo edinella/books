@@ -1,3 +1,4 @@
+const colors = require('tailwindcss/colors')
 module.exports = {
   purge: [
     './components/**/*.{vue,js}',
@@ -8,7 +9,15 @@ module.exports = {
   ],
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {},
+    colors: {
+      transparent: 'transparent',
+      current: 'currentColor',
+      black: colors.black,
+      white: colors.white,
+      primary: colors.green,
+      secondary: colors.amber,
+      neutral: colors.blueGray,
+    }
   },
   variants: {
     extend: {},

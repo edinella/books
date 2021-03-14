@@ -23,8 +23,11 @@
     "autoprefixer": "^9.8.6",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^26.6.3",
+    "fibers": "^5.0.0",
     "jest": "^26.6.3",
     "postcss": "^7.0.35",
+    "sass": "^1.32.8",
+    "sass-loader": "10",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.3",
     "ts-jest": "^26.4.4",
     "vue-jest": "^3.0.4"
