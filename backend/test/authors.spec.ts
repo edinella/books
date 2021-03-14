@@ -54,13 +54,13 @@ test.group('Authors', () => {
       Author.truncate()
     })
 
-    test('/authors should require firstName', async (assert) => {
+    test('/authors should require first_name', async (assert) => {
 
       // act
       const response = await supertest(BASE_URL).post('/authors')
         .set('Content-Type', 'application/json')
         .send({
-          lastName: 'Lee'
+          last_name: 'Lee'
         });
       const onDB = await Author.all();
 
@@ -69,19 +69,19 @@ test.group('Authors', () => {
       assert.equal(response.type, 'application/json')
       assert.includeDeepMembers(response.body.errors, [{
         rule: 'required',
-        field: 'firstName',
+        field: 'first_name',
         message: 'required validation failed'
       }]);
       assert.equal(onDB.length, 0) // 👈  no record created
     });
 
-    test('/authors should require lastName', async (assert) => {
+    test('/authors should require last_name', async (assert) => {
 
       // act
       const response = await supertest(BASE_URL).post('/authors')
         .set('Content-Type', 'application/json')
         .send({
-          firstName: 'Harper'
+          first_name: 'Harper'
         });
       const onDB = await Author.all();
 
@@ -90,7 +90,7 @@ test.group('Authors', () => {
       assert.equal(response.type, 'application/json')
       assert.includeDeepMembers(response.body.errors, [{
         rule: 'required',
-        field: 'lastName',
+        field: 'last_name',
         message: 'required validation failed'
       }]);
       assert.equal(onDB.length, 0) // 👈  no record created
@@ -102,8 +102,8 @@ test.group('Authors', () => {
       const response = await supertest(BASE_URL).post('/authors')
         .set('Content-Type', 'application/json')
         .send({
-          firstName: 'Harper',
-          lastName: 'Lee'
+          first_name: 'Harper',
+          last_name: 'Lee'
         });
       const onDB = await Author.findOrFail(1);
 
@@ -132,14 +132,14 @@ test.group('Authors', () => {
       await author.save()
     })
 
-    test('/authors/:id should require firstName', async (assert) => {
+    test('/authors/:id should require first_name', async (assert) => {
 
       // act
       const response = await supertest(BASE_URL).put(`/authors/${author.id}`)
         .set('Content-Type', 'application/json')
         .send({
-          firstName: '',
-          lastName: 'Leex'
+          first_name: '',
+          last_name: 'Leex'
         });
       const onDB = await Author.findOrFail(author.id);
 
@@ -147,7 +147,7 @@ test.group('Authors', () => {
       assert.equal(response.status, 422)
       assert.includeDeepMembers(response.body.errors, [{
         rule: 'required',
-        field: 'firstName',
+        field: 'first_name',
         message: 'required validation failed'
       }]);
       assert.equal(onDB.id, author.id);
@@ -155,14 +155,14 @@ test.group('Authors', () => {
       assert.equal(onDB.lastName, 'Lee');
     })
 
-    test('/authors/:id should require lastName', async (assert) => {
+    test('/authors/:id should require last_name', async (assert) => {
 
       // act
       const response = await supertest(BASE_URL).put(`/authors/${author.id}`)
         .set('Content-Type', 'application/json')
         .send({
-          firstName: 'Bruce',
-          lastName: '',
+          first_name: 'Bruce',
+          last_name: '',
         });
       const onDB = await Author.findOrFail(author.id);
 
@@ -170,7 +170,7 @@ test.group('Authors', () => {
       assert.equal(response.status, 422)
       assert.includeDeepMembers(response.body.errors, [{
         rule: 'required',
-        field: 'lastName',
+        field: 'last_name',
         message: 'required validation failed'
       }]);
       assert.equal(onDB.id, 1);
@@ -184,8 +184,8 @@ test.group('Authors', () => {
       const response = await supertest(BASE_URL).put(`/authors/${author.id}`)
         .set('Content-Type', 'application/json')
         .send({
-          firstName: 'Bruce',
-          lastName: 'Leex'
+          first_name: 'Bruce',
+          last_name: 'Leex'
         });
       const onDB = await Author.findOrFail(author.id);
 

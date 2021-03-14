@@ -13,21 +13,22 @@ export default class AuthorsController {
   }
 
   public async create({ request }: HttpContextContract) {
-    const validatedData = await request.validate({ schema: this.getSchema() })
-    return await Author.create(validatedData)
+    const data = await request.validate({ schema: this.getSchema() })
+    return await Author.create(data)
   }
 
   public async update({ request, params }: HttpContextContract) {
-    const previous = await Author.findOrFail(params.id);
-    const validatedData = await request.validate({ schema: this.getSchema() })
-    const author = Object.assign(previous, validatedData);
+    const author = await Author.findOrFail(params.id);
+    const data = await request.validate({ schema: this.getSchema() })
+    author.firstName = data.first_name;
+    author.lastName = data.last_name;
     return await author.save();
   }
 
   private getSchema() {
     return schema.create({
-      firstName: schema.string({ trim: true }),
-      lastName: schema.string({ trim: true }),
+      first_name: schema.string({ trim: true }),
+      last_name: schema.string({ trim: true }),
     });
   }
 }
