@@ -74,6 +74,8 @@ The services are:
 
 You can see their state and logs on Tilt interface.
 
+![Screen Recording](http://g.recordit.co/mGG6uVX00s.gif)
+
 ### Create and seed database tables
 
 With services running, you should run database migrations in order to create
