@@ -35,7 +35,7 @@ ENV NODE_ENV=production
 ENV ENV_SILENT=true
 # Set app key at start time
 ENV HOST=0.0.0.0
-ENV DB_CONNECTION=sqlite
+ENV DB_CONNECTION=mysql
 ENV APP_KEY=
 ENV PORT=
 

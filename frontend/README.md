@@ -1,5 +1,8 @@
 # frontend
 
+The frontend is based on [Nuxt](https://nuxtjs.org/),
+The Intuitive [Vue](https://vuejs.org/) Framework.
+
 ## Build Setup
 
 ```bash

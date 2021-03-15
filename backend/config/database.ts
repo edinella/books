@@ -45,6 +45,18 @@ const databaseConfig: DatabaseConfig & { orm: Partial<OrmConfig> } = {
       debug: false,
     },
 
+    mysql: {
+      client: 'mysql',
+      connection: {
+        host: Env.get('DB_HOST', '127.0.0.1') as string,
+        port: Number(Env.get('DB_PORT', 3306)),
+        user: Env.get('DB_USER', 'adonis') as string,
+        password: Env.get('DB_PASSWORD', 'adonis') as string,
+        database: Env.get('DB_NAME', 'adonis') as string,
+      },
+      healthCheck: false,
+    },
+
   },
 
   /*

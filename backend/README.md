@@ -1,10 +1,8 @@
 # Welcome!
 
-This is a simple example of a basic web platform.
-
-## API
-
-The backend API is based on [Adonis framework](https://preview.adonisjs.com/), which is a Node.js Framework focused on developer ergonomics, stability and speed.
+This backend API is based on [Adonis framework](https://preview.adonisjs.com/),
+which is a Node.js Framework focused on developer ergonomics, stability and 
+speed.
 
 ### Getting started
 
