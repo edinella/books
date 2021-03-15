@@ -117,6 +117,8 @@ Now you can open the browser on this address:
 
 `http://localhost:8080`
 
+![Screen Recording](http://g.recordit.co/8W5FBGU36V.gif)
+
 ## Development
 
 Running Backend tests:
@@ -126,6 +128,8 @@ cd backend
 DB_CONNECTION=sqlite; \
   npm test
 ```
+
+![Screen Recording](http://g.recordit.co/WfOgM8xHMj.gif)
 
 Running Backend for developing:
 
