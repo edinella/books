@@ -148,6 +148,7 @@ DB_CONNECTION=sqlite; \
 Running Frontend for developing:
 
 ```sh
+cd frontend
 npm run dev
 ```
 
