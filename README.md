@@ -109,12 +109,6 @@ Seed the tables with example data:
 npm run seed
 ```
 
-... and go back to the original directory.
-
-```sh
-cd ..
-```
-
 ### Have fun
 
 Now you can open the browser on this address:
