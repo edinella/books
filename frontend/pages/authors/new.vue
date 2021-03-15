@@ -43,7 +43,7 @@
         <div
           class="bg-secondary-100 border-t border-secondary-200 px-6 py-5 text-right"
         >
-          <v-btn class="text neutral" :to="`/authors/${author.id}`">
+          <v-btn class="text neutral" :to="`/authors`">
             &larr; Cancel
           </v-btn>
           <v-btn class="secondary" @click="save"> Save </v-btn>
