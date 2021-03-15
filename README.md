@@ -9,6 +9,8 @@ This is a simple example of a basic web platform.
 The frontend is based on [Nuxt](https://nuxtjs.org/),
 The Intuitive [Vue](https://vuejs.org/) Framework.
 
+In addition, I'm using [Tailwind](https://tailwindcss.com/) as CSS framework.
+
 ### Backend
 
 The backend API is based on [Adonis framework](https://preview.adonisjs.com/),
